@@ -12,8 +12,15 @@ import {
 } from "./styles";
 
 import UserImage from "@src/assets/user.png";
+import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
+  const navigation = useNavigation();
+
+  function handleNavigationToCreatePlay() {
+    //@ts-ignore
+    navigation.navigate("CreatePlay");
+  }
   return (
     <Container>
       <Image source={UserImage} resizeMode="stretch" />
@@ -26,7 +33,7 @@ export function Profile() {
 
         <Subtitle>Hoje é dia de vitória</Subtitle>
       </ConatinerText>
-      <ButtonAdd>
+      <ButtonAdd activeOpacity={0.8} onPress={handleNavigationToCreatePlay}>
         <Ionicons name="add" size={30} color="white" />
       </ButtonAdd>
     </Container>

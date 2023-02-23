@@ -1,9 +1,8 @@
 import styled from "styled-components/native";
 import { createScale } from "@src/utils/createScale";
-import { RectButton } from "react-native-gesture-handler";
 import { LocalSvg } from "react-native-svg";
 
-export const Container = styled(RectButton)`
+export const Container = styled.TouchableOpacity`
   width: 100%;
   height: ${createScale(56)};
   background-color: ${(props) => props.theme.colors.primary};

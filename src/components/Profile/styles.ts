@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 import { createScale } from "@src/utils/createScale";
-import { RectButton } from "react-native-gesture-handler";
 
 export const Container = styled.View`
   height: ${createScale(60)};
@@ -40,7 +39,7 @@ export const Subtitle = styled.Text`
   font-family: ${(props) => props.theme.fonts.text400};
 `;
 
-export const ButtonAdd = styled(RectButton)`
+export const ButtonAdd = styled.TouchableOpacity`
   width: ${createScale(48)};
   height: ${createScale(48)};
   border-radius: ${createScale(8)};

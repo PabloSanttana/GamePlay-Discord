@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList } from "react-native";
 import { scale } from "react-native-size-matters";
 
-import { FlatlistHorizontal } from "./styles";
+import { FlatlistHorizontal, Title } from "./styles";
 import { CardPrimary } from "@src/components/CardPrimary/index";
 
 const data = ["ranked", "duel", "fun", "training"];
@@ -12,15 +12,18 @@ interface PropsCategory {
   categorySelected: string;
   setCategory: (value: string) => void;
   markerShow?: boolean;
+  showTitle?: boolean;
 }
 
 export function Category({
   setCategory,
   markerShow = false,
   categorySelected,
+  showTitle = false,
 }: PropsCategory) {
   return (
     <FlatlistHorizontal>
+      {showTitle && <Title>Categoria</Title>}
       <FlatList
         data={data}
         keyExtractor={(item) => item}
@@ -38,7 +41,8 @@ export function Category({
           height: scale(120),
           justifyContent: "center",
           marginLeft: scale(24),
-          marginVertical: scale(30),
+          marginBottom: scale(30),
+          marginTop: scale(10),
           paddingRight: 50,
         }}
       />

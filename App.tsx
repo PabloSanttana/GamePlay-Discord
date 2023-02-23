@@ -1,4 +1,9 @@
 import "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  RotationGestureHandler,
+  TapGestureHandler,
+} from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components";
@@ -44,7 +49,9 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <StatusBar style="light" translucent backgroundColor="transparent" />
 
-      <Routes />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Routes />
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }

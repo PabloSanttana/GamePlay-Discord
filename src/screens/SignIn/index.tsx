@@ -16,6 +16,7 @@ export function SignIn() {
   const navigation = useNavigation();
 
   function handleSignIn() {
+    console.log("opa");
     //@ts-ignore
     navigation.navigate("Home");
   }

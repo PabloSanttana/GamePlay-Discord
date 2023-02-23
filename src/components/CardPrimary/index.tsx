@@ -1,5 +1,6 @@
 import React from "react";
-import { RectButtonProps } from "react-native-gesture-handler";
+
+import { TouchableOpacityProps } from "react-native";
 import { scale } from "react-native-size-matters";
 
 import DuelSvg from "@src/assets/duel.svg";
@@ -7,9 +8,10 @@ import RankedSvg from "@src/assets/ranked.svg";
 import TrainingSvg from "@src/assets/training.svg";
 import FunSvg from "@src/assets/fun.svg";
 
-import { Container, Icon, Title, Marker } from "./styles";
+import { Container, Icon, Title, Marker, Content } from "./styles";
+import { useTheme } from "styled-components";
 
-interface PropsCardPrimary extends RectButtonProps {
+interface PropsCardPrimary extends TouchableOpacityProps {
   type: "duel" | "ranked" | "training" | "fun";
   markerShow?: boolean;
   markerActive?: boolean;
@@ -41,11 +43,15 @@ export function CardPrimary({
     opacity = markerActive ? 1 : 0.6;
   }
 
+  const theme = useTheme();
+
   return (
-    <Container style={{ opacity: opacity }} {...rest}>
-      <Icon asset={svgs[type]} width={scale(48)} height={scale(48)} />
-      <Title>{titlesCard[type]}</Title>
-      {markerShow && <Marker active={markerActive} />}
-    </Container>
+    <Content colors={[theme.colors.secondary50, theme.colors.secondary70]}>
+      <Container activeOpacity={0.8} style={{ opacity: opacity }} {...rest}>
+        <Icon asset={svgs[type]} width={scale(48)} height={scale(48)} />
+        <Title>{titlesCard[type]}</Title>
+        {markerShow && <Marker active={markerActive} />}
+      </Container>
+    </Content>
   );
 }

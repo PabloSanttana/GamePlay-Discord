@@ -1,12 +1,11 @@
 import { LocalSvg } from "react-native-svg";
 import styled from "styled-components/native";
 import { createScale } from "@src/utils/createScale";
-import { RectButton } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
-export const Container = styled(RectButton)`
+export const Content = styled(LinearGradient)`
   width: ${createScale(104)};
   height: ${createScale(120)};
-  background-color: ${(props) => props.theme.colors.secondary40};
   border-color: ${(props) => props.theme.colors.secondary30};
   border-width: ${createScale(1)};
   border-radius: ${createScale(8)};
@@ -14,6 +13,13 @@ export const Container = styled(RectButton)`
   justify-content: center;
   position: relative;
   margin-right: ${createScale(8)};
+`;
+
+export const Container = styled.TouchableOpacity`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Icon = styled(LocalSvg)``;

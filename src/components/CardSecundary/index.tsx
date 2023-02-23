@@ -1,6 +1,5 @@
-import { Text } from "react-native";
 import React from "react";
-import { RectButtonProps } from "react-native-gesture-handler";
+import { TouchableOpacityProps } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import UserImage from "@src/assets/user.png";
@@ -20,11 +19,14 @@ import {
 } from "./styles";
 import { scale } from "react-native-size-matters";
 
-interface PropsCardSecundary extends RectButtonProps {}
+import { useTheme } from "styled-components";
+
+interface PropsCardSecundary extends TouchableOpacityProps {}
 
 export function CardSecundary({ ...rest }: PropsCardSecundary) {
+  const theme = useTheme();
   return (
-    <Container {...rest}>
+    <Container activeOpacity={0.8} {...rest}>
       <Image source={UserImage} />
       <Content>
         <ContentLine>

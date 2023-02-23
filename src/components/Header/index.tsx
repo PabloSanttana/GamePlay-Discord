@@ -31,7 +31,7 @@ export function Header({ title, share = false }: PropsHeader) {
       <Title>{title}</Title>
       <ContainerShare>
         {share && (
-          <ButtonOpacity>
+          <ButtonOpacity activeOpacity={0.8}>
             <Fontisto
               name="share"
               size={scale(24)}
