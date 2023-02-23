@@ -6,8 +6,8 @@ import { LocalSvg } from "react-native-svg";
 
 export const Container = styled(RectButton)`
   flex-direction: row;
-  height: ${createScale(85)};
-  margin-top: ${createScale(15)};
+  height: ${createScale(70)};
+  margin-top: ${createScale(20)};
 `;
 
 export const Image = styled.Image`

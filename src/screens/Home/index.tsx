@@ -1,34 +1,40 @@
 import React, { useState } from "react";
 
-import { View } from "react-native";
-import { Header } from "@src/components/Header";
+import { useNavigation } from "@react-navigation/native";
 
 import { HomeContainer } from "./styles";
 import { Background } from "@src/components/Background";
 import { Category } from "@src/components/Category";
-import { CardSecundary } from "../../components/CardSecundary/index";
+import { Profile } from "@src/components/Profile";
+import { ListCard } from "@src/components/ListCard";
 
 export function Home() {
+  const navigation = useNavigation();
   const [category, setCategory] = useState("");
 
   function handleCategorySelect(categoryId: string) {
     categoryId === category ? setCategory("") : setCategory(categoryId);
   }
 
+  function handleSelectedSevice() {
+    //@ts-ignore
+    navigation.navigate("Details");
+  }
+
   return (
     <Background>
       <HomeContainer>
-        <Header />
+        <Profile />
         <Category
           categorySelected={category}
           setCategory={handleCategorySelect}
           markerShow={false}
         />
 
-        <View style={{ flex: 1 }}>
-          <CardSecundary />
-          <CardSecundary />
-        </View>
+        <ListCard
+          titleHeader="Partidas agendadas"
+          onPress={handleSelectedSevice}
+        />
       </HomeContainer>
     </Background>
   );

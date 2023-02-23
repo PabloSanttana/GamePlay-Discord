@@ -1,34 +1,45 @@
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-import {
-  ButtonAdd,
-  ConatinerText,
-  Container,
-  Image,
-  Subtitle,
-  Title,
-  ContainerTitle,
-} from "./styles";
+import { Container, Title, ButtonOpacity, ContainerShare } from "./styles";
+import { useTheme } from "styled-components";
+import { scale } from "react-native-size-matters";
+import { useNavigation } from "@react-navigation/native";
 
-import UserImage from "@src/assets/user.png";
+interface PropsHeader {
+  title: string;
+  share?: boolean;
+}
 
-export function Header() {
+export function Header({ title, share = false }: PropsHeader) {
+  const navigation = useNavigation();
+
+  function handleGoback() {
+    navigation.goBack();
+  }
+  const theme = useTheme();
   return (
-    <Container>
-      <Image source={UserImage} resizeMode="stretch" />
-
-      <ConatinerText>
-        <ContainerTitle>
-          <Title>Olá,</Title>
-          <Title bold>Pablo</Title>
-        </ContainerTitle>
-
-        <Subtitle>Hoje é dia de vitória</Subtitle>
-      </ConatinerText>
-      <ButtonAdd>
-        <Ionicons name="add" size={30} color="white" />
-      </ButtonAdd>
+    <Container colors={[theme.colors.secondary80, theme.colors.secondary70]}>
+      <ButtonOpacity onPress={handleGoback}>
+        <FontAwesome5
+          name="arrow-left"
+          size={scale(24)}
+          color={theme.colors.heading}
+        />
+      </ButtonOpacity>
+      <Title>{title}</Title>
+      <ContainerShare>
+        {share && (
+          <ButtonOpacity>
+            <Fontisto
+              name="share"
+              size={scale(24)}
+              color={theme.colors.primary}
+            />
+          </ButtonOpacity>
+        )}
+      </ContainerShare>
     </Container>
   );
 }
