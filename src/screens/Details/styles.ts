@@ -18,14 +18,12 @@ export const Title = styled.Text`
   font-family: ${(props) => props.theme.fonts.title700};
   font-size: ${createScale(28)};
   color: ${(props) => props.theme.colors.heading};
-  text-align: end;
   margin-bottom: ${createScale(10)};
 `;
 export const SubTitle = styled.Text`
   font-family: ${(props) => props.theme.fonts.text500};
   font-size: ${createScale(13)};
   color: ${(props) => props.theme.colors.heading};
-  line-height: ${createScale(21)};
 `;
 export const Content = styled.View`
   flex: 1;
