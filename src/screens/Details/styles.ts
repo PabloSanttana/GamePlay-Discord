@@ -6,7 +6,7 @@ export const Container = styled.View`
 `;
 
 export const BackgroundImage = styled.ImageBackground`
-  height: ${createScale(250)};
+  height: ${createScale(234)};
   padding: 0px ${createScale(24)};
   justify-content: flex-end;
   background-color: red;
@@ -28,4 +28,13 @@ export const SubTitle = styled.Text`
 export const Content = styled.View`
   flex: 1;
   padding: 0px ${createScale(24)};
+`;
+export const Separador = styled.View`
+  height: ${createScale(1)};
+  margin-left: ${createScale(105)};
+  background-color: ${(props) => props.theme.colors.secondary50};
+`;
+
+export const ContainerButton = styled.View`
+  margin: ${createScale(24)};
 `;

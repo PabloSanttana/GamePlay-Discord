@@ -2,14 +2,12 @@ import React from "react";
 import { TouchableOpacityProps } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-import UserImage from "@src/assets/user.png";
 import Calendar from "@src/assets/calendar.svg";
 
 import {
   Container,
   Content,
   ContentLine,
-  Image,
   SubtTitle,
   Title,
   Footer,
@@ -18,16 +16,14 @@ import {
   FooterTitle,
 } from "./styles";
 import { scale } from "react-native-size-matters";
-
-import { useTheme } from "styled-components";
+import { GuildIcon } from "@src/components/GuildIcon";
 
 interface PropsCardSecundary extends TouchableOpacityProps {}
 
 export function CardSecundary({ ...rest }: PropsCardSecundary) {
-  const theme = useTheme();
   return (
     <Container activeOpacity={0.8} {...rest}>
-      <Image source={UserImage} />
+      <GuildIcon icon="https://avatars.githubusercontent.com/u/52142127?v=4" />
       <Content>
         <ContentLine>
           <Title>Lendários</Title>

@@ -24,6 +24,7 @@ import { useTheme } from "styled-components";
 import { Input } from "../../components/Input/index";
 
 import { Button } from "@src/components/Button";
+import { Guilds } from "@src//components/Guilds";
 
 export function CreatePlay() {
   const myScrollView = useRef(null);
@@ -107,6 +108,7 @@ export function CreatePlay() {
             </ContainerButton>
           </Content>
         </Container>
+        <Guilds />
       </Background>
     </KeyboardAvoidingView>
   );

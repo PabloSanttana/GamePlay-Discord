@@ -9,21 +9,9 @@ export const Container = styled.TouchableOpacity`
   margin-top: ${createScale(20)};
 `;
 
-export const Image = styled.Image`
-  width: ${createScale(64)};
-  height: ${createScale(68)};
-  border-radius: ${createScale(8)};
-  margin-left: ${createScale(24)};
-  margin-right: ${createScale(20)};
-  border-width: ${createScale(1)};
-  border-color: ${(props) => props.theme.colors.secondary50};
-`;
-
 export const Content = styled.View`
   flex: 1;
   height: 100%;
-  border-bottom-width: ${createScale(1)};
-  border-bottom-color: ${(props) => props.theme.colors.secondary50};
   padding-right: ${createScale(24)};
 `;
 

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-
+import { FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { HomeContainer } from "./styles";
 import { Background } from "@src/components/Background";
 import { Category } from "@src/components/Category";
 import { Profile } from "@src/components/Profile";
-import { ListCard } from "@src/components/ListCard";
+import { HeaderList } from "@src/components/HeaderList";
+import { CardSecundary } from "@src/components/CardSecundary";
+import { HomeContainer, Separador } from "./styles";
 
 export function Home() {
   const navigation = useNavigation();
@@ -21,6 +22,24 @@ export function Home() {
     navigation.navigate("Details");
   }
 
+  const data = [
+    {
+      id: "1",
+
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+    {
+      id: "2",
+
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+    {
+      id: "3",
+
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+  ];
+
   return (
     <Background>
       <HomeContainer>
@@ -31,9 +50,18 @@ export function Home() {
           markerShow={false}
         />
 
-        <ListCard
-          titleHeader="Partidas agendadas"
-          onPress={handleSelectedSevice}
+        <HeaderList
+          title="Partidas agendadas"
+          subtitle={`Total ${data.length}`}
+        />
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={data}
+          renderItem={({ item }) => (
+            <CardSecundary onPress={handleSelectedSevice} />
+          )}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Separador />}
         />
       </HomeContainer>
     </Background>

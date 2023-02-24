@@ -1,13 +1,43 @@
 import React from "react";
+import { FlatList } from "react-native";
 
-import { Container, Title, SubTitle, Content, BackgroundImage } from "./styles";
 import { Background } from "@src/components/Background";
 import { Header } from "@src/components/Header";
-
 import Banner from "@src/assets/banner.png";
-import { ListCard } from "@src/components/ListCard";
+import { HeaderList } from "@src/components/HeaderList";
+import { Menber } from "@src/components/Member/index";
+import { Button } from "@src/components/Button";
+import {
+  Container,
+  Title,
+  SubTitle,
+  Separador,
+  BackgroundImage,
+  ContainerButton,
+} from "./styles";
 
 export function Details() {
+  const menbers = [
+    {
+      id: "1",
+      userName: "Pablo",
+      status: "Disponível",
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+    {
+      id: "2",
+      userName: "Pablo",
+      status: "Ocupado",
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+    {
+      id: "3",
+      userName: "Pablo",
+      status: "Indisponível",
+      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
+    },
+  ];
+
   return (
     <Background>
       <Container>
@@ -18,7 +48,23 @@ export function Details() {
             É hoje que vamos chegar ao challenger sem perder uma partida da md10
           </SubTitle>
         </BackgroundImage>
-        <ListCard titleHeader="Jogadores" onPress={() => {}} />
+        <HeaderList title="Jogadores" subtitle={`Total ${menbers.length}`} />
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={menbers}
+          renderItem={({ item }) => (
+            <Menber
+              avatar_url={item.avatar_url}
+              status={item.status}
+              userName={item.userName}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Separador />}
+        />
+        <ContainerButton>
+          <Button icon title="Entrar no servidor" onPress={() => {}} />
+        </ContainerButton>
       </Container>
     </Background>
   );
