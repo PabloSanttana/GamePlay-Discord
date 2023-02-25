@@ -7,11 +7,11 @@ import Banner from "@src/assets/banner.png";
 import { HeaderList } from "@src/components/HeaderList";
 import { Menber } from "@src/components/Member/index";
 import { Button } from "@src/components/Button";
+import { ListDivider } from "../../components/ListDivider/index";
 import {
   Container,
   Title,
   SubTitle,
-  Separador,
   BackgroundImage,
   ContainerButton,
 } from "./styles";
@@ -60,7 +60,8 @@ export function Details() {
             />
           )}
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Separador />}
+          ItemSeparatorComponent={() => <ListDivider />}
+          contentContainerStyle={{ paddingBottom: 69 }}
         />
         <ContainerButton>
           <Button icon title="Entrar no servidor" onPress={() => {}} />

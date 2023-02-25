@@ -1,13 +1,16 @@
 import * as React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
+import { SignIn } from "@src/screens/SignIn";
 
-import StackAuth from "./auth.routes";
+import AppRoutes from "./app.routes";
+import { useAuth } from "@src/hooks/auth";
 
 function Router() {
+  const { user } = useAuth();
   return (
     <NavigationContainer>
-      <StackAuth />
+      {user.id ? <AppRoutes /> : <SignIn />}
     </NavigationContainer>
   );
 }

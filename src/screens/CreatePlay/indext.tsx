@@ -9,7 +9,6 @@ import { Header } from "@src/components/Header";
 import {
   Container,
   SelectedService,
-  SelectedServiceImage,
   SelectedServiceTitle,
   SectionForm,
   FormRow,
@@ -17,22 +16,40 @@ import {
   Textarea,
   ContainerButton,
   Content,
+  SelectedServiceSubTitle,
+  ContainerGuildSelect,
+  CardImage,
 } from "./styles";
 
 import UserImage from "@src/assets/user.png";
 import { useTheme } from "styled-components";
-import { Input } from "../../components/Input/index";
+import { Input } from "../../components/Input";
 
 import { Button } from "@src/components/Button";
-import { Guilds } from "@src//components/Guilds";
+import { Guilds } from "@src/components/Guilds";
+import { ModalView } from "@src/components/ModalView";
+import { GuildProps } from "../../components/Guild";
+import { GuildIcon } from "@src/components/GuildIcon";
 
 export function CreatePlay() {
   const myScrollView = useRef(null);
   const theme = useTheme();
   const [category, setCategory] = useState("");
+  const [openGuildsModal, setOpenGuildsModal] = useState(false);
+  const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
 
   function handleSelectCategory(value: string) {
     category === value ? setCategory("") : setCategory(value);
+  }
+
+  function handleOpenGuilds() {
+    setOpenGuildsModal(true);
+  }
+
+  function handleGuildSelect(guildSelect: GuildProps) {
+    console.log(guildSelect);
+    setOpenGuildsModal(false);
+    setGuild(guildSelect);
   }
 
   return (
@@ -50,9 +67,26 @@ export function CreatePlay() {
             setCategory={handleSelectCategory}
           />
           <Content>
-            <SelectedService activeOpacity={0.7}>
-              <SelectedServiceImage source={UserImage} />
-              <SelectedServiceTitle>Selecione um servidor</SelectedServiceTitle>
+            <SelectedService activeOpacity={0.7} onPress={handleOpenGuilds}>
+              {guild.icon ? (
+                <GuildIcon icon={guild.icon} />
+              ) : (
+                <CardImage
+                  colors={[theme.colors.secondary50, theme.colors.secondary70]}
+                />
+              )}
+
+              <ContainerGuildSelect>
+                <SelectedServiceTitle>
+                  {guild.name ? guild.name : "Selecione um servidor"}
+                </SelectedServiceTitle>
+                {guild.game && (
+                  <SelectedServiceSubTitle>
+                    {guild.game}
+                  </SelectedServiceSubTitle>
+                )}
+              </ContainerGuildSelect>
+
               <MaterialIcons
                 name="navigate-next"
                 size={24}
@@ -108,7 +142,10 @@ export function CreatePlay() {
             </ContainerButton>
           </Content>
         </Container>
-        <Guilds />
+
+        <ModalView visible={openGuildsModal}>
+          <Guilds handleGuildSelect={handleGuildSelect} />
+        </ModalView>
       </Background>
     </KeyboardAvoidingView>
   );

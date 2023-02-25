@@ -8,11 +8,13 @@ export const Container = styled.TouchableOpacity`
   height: ${createScale(70)};
   align-items: center;
   padding-right: ${createScale(24)};
+  padding-left: ${createScale(24)};
 `;
 
 export const Content = styled.View`
   flex: 1;
   padding-right: ${createScale(24)};
+  padding-left: ${createScale(20)};
 `;
 
 export const Title = styled.Text`

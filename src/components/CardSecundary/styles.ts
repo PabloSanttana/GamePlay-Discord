@@ -7,12 +7,14 @@ export const Container = styled.TouchableOpacity`
   flex-direction: row;
   height: ${createScale(70)};
   margin-top: ${createScale(20)};
+  padding-left: ${createScale(24)};
 `;
 
 export const Content = styled.View`
   flex: 1;
   height: 100%;
   padding-right: ${createScale(24)};
+  padding-left: ${createScale(20)};
 `;
 
 export const ContentLine = styled.View`

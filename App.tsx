@@ -1,9 +1,5 @@
 import "react-native-gesture-handler";
-import {
-  GestureHandlerRootView,
-  RotationGestureHandler,
-  TapGestureHandler,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components";
@@ -23,6 +19,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { theme } from "@src/themes/theme";
 
 import Routes from "@src/routes";
+import { AuthProvider } from "@src/hooks/auth";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -46,12 +43,11 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <AuthProvider>
       <StatusBar style="light" translucent backgroundColor="transparent" />
-
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Routes />
       </GestureHandlerRootView>
-    </ThemeProvider>
+    </AuthProvider>
   );
 }

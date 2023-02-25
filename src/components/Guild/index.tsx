@@ -5,19 +5,23 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Container, Content, SubtTitle, Title } from "./styles";
 import { GuildIcon } from "@src/components/GuildIcon";
 
-interface PropsGuild extends TouchableOpacityProps {
-  title: string;
+export interface GuildProps {
+  id: string;
+  name: string;
   game: string;
   icon: string;
 }
+interface PropsGuild extends TouchableOpacityProps {
+  data: GuildProps;
+}
 
-export function Guild({ title, game, icon, ...rest }: PropsGuild) {
+export function Guild({ data, ...rest }: PropsGuild) {
   return (
     <Container activeOpacity={0.8} {...rest}>
-      <GuildIcon icon={icon} />
+      <GuildIcon icon={data.icon} />
       <Content>
-        <Title>{title}</Title>
-        <SubtTitle>{game}</SubtTitle>
+        <Title>{data.name}</Title>
+        <SubtTitle>{data.game}</SubtTitle>
       </Content>
       <FontAwesome name="chevron-right" size={13} color="white" />
     </Container>

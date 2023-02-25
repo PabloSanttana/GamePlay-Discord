@@ -7,7 +7,8 @@ import { Category } from "@src/components/Category";
 import { Profile } from "@src/components/Profile";
 import { HeaderList } from "@src/components/HeaderList";
 import { CardSecundary } from "@src/components/CardSecundary";
-import { HomeContainer, Separador } from "./styles";
+import { HomeContainer } from "./styles";
+import { ListDivider } from "@src/components/ListDivider";
 
 export function Home() {
   const navigation = useNavigation();
@@ -61,7 +62,8 @@ export function Home() {
             <CardSecundary onPress={handleSelectedSevice} />
           )}
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Separador />}
+          ItemSeparatorComponent={() => <ListDivider />}
+          contentContainerStyle={{ paddingBottom: 69 }}
         />
       </HomeContainer>
     </Background>

@@ -29,11 +29,6 @@ export const Content = styled.View`
   flex: 1;
   padding: 0px ${createScale(24)};
 `;
-export const Separador = styled.View`
-  height: ${createScale(1)};
-  margin-left: ${createScale(105)};
-  background-color: ${(props) => props.theme.colors.secondary50};
-`;
 
 export const ContainerButton = styled.View`
   margin: ${createScale(24)};

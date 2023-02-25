@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { createScale } from "@src/utils/createScale";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -19,19 +20,29 @@ export const SelectedService = styled.TouchableOpacity`
   padding-right: ${createScale(20)};
 `;
 
-export const SelectedServiceTitle = styled.Text`
-  font-family: ${(props) => props.theme.fonts.title700};
-  font-size: ${createScale(18)};
-  color: ${(props) => props.theme.colors.heading};
-  margin: 0px auto;
-`;
-
-export const SelectedServiceImage = styled.Image`
+export const CardImage = styled(LinearGradient)`
   width: ${createScale(64)};
   height: 100%;
   border-radius: ${createScale(8)};
   border-color: ${(props) => props.theme.colors.secondary50};
   border-width: ${createScale(1)};
+`;
+
+export const ContainerGuildSelect = styled.View`
+  margin-left: ${createScale(20)};
+  margin-right: auto; ;
+`;
+
+export const SelectedServiceTitle = styled.Text`
+  font-family: ${(props) => props.theme.fonts.title700};
+  font-size: ${createScale(18)};
+  color: ${(props) => props.theme.colors.heading};
+`;
+
+export const SelectedServiceSubTitle = styled.Text`
+  font-family: ${(props) => props.theme.fonts.text400};
+  font-size: ${createScale(13)};
+  color: ${(props) => props.theme.colors.heading};
 `;
 
 export const SectionForm = styled.View`

@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert, ActivityIndicator } from "react-native";
 import {
   SignInContainer,
   SignInContent,
@@ -10,15 +11,20 @@ import {
 import Illustration from "@src/assets/illustration.png";
 import { Button } from "@src/components/Button";
 import { Background } from "@src/components/Background";
-import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "@src/hooks/auth";
+import { useTheme } from "styled-components";
 
 export function SignIn() {
-  const navigation = useNavigation();
+  const theme = useTheme();
+  const { loading, signIn } = useAuth();
 
-  function handleSignIn() {
-    console.log("opa");
-    //@ts-ignore
-    navigation.navigate("Home");
+  async function handleSignIn() {
+    try {
+      await signIn();
+    } catch (error) {
+      //@ts-ignore
+      Alert.alert(error);
+    }
   }
 
   return (
@@ -30,11 +36,15 @@ export function SignIn() {
           <SignInSubTitle>
             Crie grupos para jogar seus games favoritos com seus amigos
           </SignInSubTitle>
-          <Button
-            icon
-            title="Entrar no Discord"
-            onPress={() => handleSignIn()}
-          />
+          {loading ? (
+            <ActivityIndicator color={theme.colors.primary} />
+          ) : (
+            <Button
+              icon
+              title="Entrar no Discord"
+              onPress={() => handleSignIn()}
+            />
+          )}
         </SignInContent>
       </SignInContainer>
     </Background>

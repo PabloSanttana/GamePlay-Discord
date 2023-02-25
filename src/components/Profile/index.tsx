@@ -13,8 +13,10 @@ import {
 
 import UserImage from "@src/assets/user.png";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "@src/hooks/auth";
 
 export function Profile() {
+  const { user } = useAuth();
   const navigation = useNavigation();
 
   function handleNavigationToCreatePlay() {
@@ -23,12 +25,12 @@ export function Profile() {
   }
   return (
     <Container>
-      <Image source={UserImage} resizeMode="stretch" />
+      <Image source={{ uri: user.avatar }} resizeMode="stretch" />
 
       <ConatinerText>
         <ContainerTitle>
           <Title>Olá,</Title>
-          <Title bold>Pablo</Title>
+          <Title bold> {user.firstName}</Title>
         </ContainerTitle>
 
         <Subtitle>Hoje é dia de vitória</Subtitle>
