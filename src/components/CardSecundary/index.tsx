@@ -23,7 +23,7 @@ interface PropsCardSecundary extends TouchableOpacityProps {}
 export function CardSecundary({ ...rest }: PropsCardSecundary) {
   return (
     <Container activeOpacity={0.8} {...rest}>
-      <GuildIcon icon="https://avatars.githubusercontent.com/u/52142127?v=4" />
+      <GuildIcon iconId="" guildId="" />
       <Content>
         <ContentLine>
           <Title>Lendários</Title>

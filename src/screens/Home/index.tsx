@@ -23,23 +23,7 @@ export function Home() {
     navigation.navigate("Details");
   }
 
-  const data = [
-    {
-      id: "1",
-
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-    {
-      id: "2",
-
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-    {
-      id: "3",
-
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-  ];
+  const data = [];
 
   return (
     <Background>

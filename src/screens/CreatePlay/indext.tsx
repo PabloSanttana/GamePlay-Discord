@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform } from "react-native";
+import uuid from "react-native-uuid";
+import { parse, isValid, format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 import { Background } from "@src/components/Background";
 import { Category } from "@src/components/Category";
@@ -21,7 +24,6 @@ import {
   CardImage,
 } from "./styles";
 
-import UserImage from "@src/assets/user.png";
 import { useTheme } from "styled-components";
 import { Input } from "../../components/Input";
 
@@ -38,6 +40,12 @@ export function CreatePlay() {
   const [openGuildsModal, setOpenGuildsModal] = useState(false);
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
 
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [hours, setHours] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [description, setDescription] = useState("");
+
   function handleSelectCategory(value: string) {
     category === value ? setCategory("") : setCategory(value);
   }
@@ -47,9 +55,36 @@ export function CreatePlay() {
   }
 
   function handleGuildSelect(guildSelect: GuildProps) {
-    console.log(guildSelect);
     setOpenGuildsModal(false);
     setGuild(guildSelect);
+  }
+
+  function handleSubmit() {
+    console.log(day, month, hours, minutes, description);
+    const year = new Date().getFullYear();
+    const parsed = parse(`${day}/${month}/${year}`, "P", new Date(), {
+      locale: ptBR,
+    });
+    if (!isValid(parsed)) {
+      Alert.alert("Data inválida");
+      return;
+    }
+    if (!(hours >= "0" && hours <= "23")) {
+      Alert.alert("Hora inválida");
+      return;
+    }
+    if (!(minutes >= "0" && minutes <= "59")) {
+      Alert.alert("Hora inválida");
+      return;
+    }
+
+    const newAppointment = {
+      id: uuid.v4(),
+      guild,
+      category,
+      date: `${day}/${month} às ${hours}/${minutes}h`,
+      description: description,
+    };
   }
 
   return (
@@ -69,7 +104,7 @@ export function CreatePlay() {
           <Content>
             <SelectedService activeOpacity={0.7} onPress={handleOpenGuilds}>
               {guild.icon ? (
-                <GuildIcon icon={guild.icon} />
+                <GuildIcon iconId={guild.icon} guildId={guild.id} />
               ) : (
                 <CardImage
                   colors={[theme.colors.secondary50, theme.colors.secondary70]}
@@ -100,20 +135,30 @@ export function CreatePlay() {
                   label="Dia e mês"
                   maxLength={2}
                   keyboardType="numbers-and-punctuation"
+                  onChangeText={setDay}
                 />
                 <Separador style={{ marginLeft: -10, marginRight: 3 }}>
                   /
                 </Separador>
-                <Input maxLength={2} keyboardType="numbers-and-punctuation" />
+                <Input
+                  maxLength={2}
+                  keyboardType="numbers-and-punctuation"
+                  onChangeText={setMonth}
+                />
               </FormRow>
               <FormRow style={{ marginLeft: 50 }}>
                 <Input
                   label="Horário"
                   maxLength={2}
                   keyboardType="numbers-and-punctuation"
+                  onChangeText={setHours}
                 />
                 <Separador>:</Separador>
-                <Input maxLength={2} keyboardType="numbers-and-punctuation" />
+                <Input
+                  maxLength={2}
+                  keyboardType="numbers-and-punctuation"
+                  onChangeText={setMinutes}
+                />
               </FormRow>
             </SectionForm>
             <Textarea>
@@ -125,6 +170,7 @@ export function CreatePlay() {
                 multiline={true}
                 numberOfLines={5}
                 autoCorrect={false}
+                onChangeText={setDescription}
                 style={{ textAlignVertical: "top" }}
                 onFocus={() =>
                   //@ts-ignore
@@ -138,7 +184,7 @@ export function CreatePlay() {
             </Textarea>
 
             <ContainerButton>
-              <Button title="Agendar" />
+              <Button title="Agendar" onPress={handleSubmit} />
             </ContainerButton>
           </Content>
         </Container>

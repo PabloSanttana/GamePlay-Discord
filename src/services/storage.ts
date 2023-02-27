@@ -21,3 +21,21 @@ export async function setUserAuth(user: UserProps) {
     throw new Error("Não foi possível salvar.");
   }
 }
+
+export async function setAppointment() {
+  try {
+    const jsonUser = JSON.stringify({});
+    await AsyncStorage.setItem(app + "_Appointments", jsonUser);
+  } catch (error) {
+    throw new Error("Não foi possível salvar.");
+  }
+}
+
+export async function getAppointment() {
+  try {
+    const jsonUser = await AsyncStorage.getItem(app + "_Appointments");
+    return jsonUser != null ? JSON.parse(jsonUser) : null;
+  } catch (error) {
+    return null;
+  }
+}

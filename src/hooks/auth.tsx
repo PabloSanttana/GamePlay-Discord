@@ -5,7 +5,7 @@ import * as AuthSession from "expo-auth-session";
 import { theme } from "@src/themes/theme";
 
 const { CLIENT_ID } = process.env;
-const { CND_IMAGE } = process.env;
+const { CDN_IMAGE } = process.env;
 const { REDIRECT_URL } = process.env;
 const { RESPONSE_TYPE } = process.env;
 const { SCOPE } = process.env;
@@ -54,6 +54,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       setLoading(true);
       const response = await getUserAuth();
       if (response) {
+        api.defaults.headers.authorization = `Bearer ${response.token}`;
         setUser(response);
       }
     } catch (error) {
@@ -79,7 +80,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         const userInfo = await api.get("users/@me");
 
         const firstName = userInfo.data.username.split(" ")[0];
-        userInfo.data.avatar = `${CND_IMAGE}/avatars/${userInfo.data.id}/${userInfo.data.avatar}.png`;
+        userInfo.data.avatar = `${CDN_IMAGE}/avatars/${userInfo.data.id}/${userInfo.data.avatar}.png`;
 
         const dataUser = {
           ...userInfo.data,
