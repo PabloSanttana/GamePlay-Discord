@@ -22,7 +22,7 @@ export function Guild({ data, ...rest }: PropsGuild) {
       <GuildIcon iconId={data.icon} guildId={data.id} />
       <Content>
         <Title>{data.name}</Title>
-        <SubtTitle>{data.game}</SubtTitle>
+        <SubtTitle>{data.owner ? "Proprietário" : "Convidado"}</SubtTitle>
       </Content>
       <FontAwesome name="chevron-right" size={13} color="white" />
     </Container>

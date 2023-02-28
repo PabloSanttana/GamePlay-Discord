@@ -9,3 +9,15 @@ export const HomeContainer = styled.View`
 `;
 
 export const HomeFlatlistHorizontal = styled.View``;
+
+export const ListEmpty = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+export const ListEmptyTitle = styled.Text`
+  color: ${(props) => props.theme.colors.heading};
+  font-family: ${(props) => props.theme.fonts.title700};
+  font-size: ${createScale(17)};
+  margin-top: ${createScale(10)};
+`;

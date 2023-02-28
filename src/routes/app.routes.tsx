@@ -3,8 +3,8 @@ import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Home } from "@src/screens/Home";
-import { Details } from "../screens/Details/index";
-import { CreatePlay } from "../screens/CreatePlay/indext";
+import { Details } from "@src/screens/Details/index";
+import { Appointment } from "@src/screens/Appointment";
 
 const StackRoutes = createNativeStackNavigator();
 
@@ -24,7 +24,7 @@ function AppRoutes() {
       <StackRoutes.Screen
         options={{ headerShown: false }}
         name="CreatePlay"
-        component={CreatePlay}
+        component={Appointment}
       />
     </StackRoutes.Navigator>
   );

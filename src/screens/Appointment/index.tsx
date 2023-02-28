@@ -2,12 +2,9 @@ import React, { useRef, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import uuid from "react-native-uuid";
-import { parse, isValid, format } from "date-fns";
+import { useNavigation } from "@react-navigation/native";
+import { parse, isValid } from "date-fns";
 import { ptBR } from "date-fns/locale";
-
-import { Background } from "@src/components/Background";
-import { Category } from "@src/components/Category";
-import { Header } from "@src/components/Header";
 
 import {
   Container,
@@ -32,8 +29,13 @@ import { Guilds } from "@src/components/Guilds";
 import { ModalView } from "@src/components/ModalView";
 import { GuildProps } from "../../components/Guild";
 import { GuildIcon } from "@src/components/GuildIcon";
+import { setAppointment, AppointmentProps } from "@src/services/storage";
+import { Background } from "@src/components/Background";
+import { Category } from "@src/components/Category";
+import { Header } from "@src/components/Header";
 
-export function CreatePlay() {
+export function Appointment() {
+  const navigation = useNavigation();
   const myScrollView = useRef(null);
   const theme = useTheme();
   const [category, setCategory] = useState("");
@@ -59,32 +61,47 @@ export function CreatePlay() {
     setGuild(guildSelect);
   }
 
-  function handleSubmit() {
-    console.log(day, month, hours, minutes, description);
-    const year = new Date().getFullYear();
-    const parsed = parse(`${day}/${month}/${year}`, "P", new Date(), {
-      locale: ptBR,
-    });
-    if (!isValid(parsed)) {
-      Alert.alert("Data inválida");
-      return;
-    }
-    if (!(hours >= "0" && hours <= "23")) {
-      Alert.alert("Hora inválida");
-      return;
-    }
-    if (!(minutes >= "0" && minutes <= "59")) {
-      Alert.alert("Hora inválida");
-      return;
-    }
+  async function handleSubmit() {
+    try {
+      if (!guild.id) {
+        Alert.alert("Selecione um servidor");
+        return;
+      }
+      if (!(hours >= "0" && hours <= "23")) {
+        Alert.alert("Hora inválida");
+        return;
+      }
+      if (!(minutes >= "0" && minutes <= "59")) {
+        Alert.alert("Hora inválida");
+        return;
+      }
+      if (category == "") {
+        Alert.alert("Selecione uma categoria");
+        return;
+      }
 
-    const newAppointment = {
-      id: uuid.v4(),
-      guild,
-      category,
-      date: `${day}/${month} às ${hours}/${minutes}h`,
-      description: description,
-    };
+      const year = new Date().getFullYear();
+      const parsed = parse(`${day}/${month}/${year}`, "P", new Date(), {
+        locale: ptBR,
+      });
+
+      if (!isValid(parsed)) {
+        Alert.alert("Data inválida");
+        return;
+      }
+
+      const newAppointment = {
+        id: uuid.v4(),
+        guild,
+        category,
+        date: `${day}/${month} às ${hours}/${minutes}h`,
+        description: description,
+      } as AppointmentProps;
+      await setAppointment(newAppointment);
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert("Erro, Tente novamente");
+    }
   }
 
   return (

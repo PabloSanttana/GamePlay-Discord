@@ -2,14 +2,14 @@ import styled from "styled-components/native";
 import { createScale } from "@src/utils/createScale";
 
 export const ModallView = styled.Modal``;
-export const Container = styled.View`
-  flex: 1;
-  margin-top: ${createScale(100)};
-`;
 
 export const Overlay = styled.View`
   flex: 1;
   background-color: ${(props) => props.theme.colors.overlay};
+`;
+export const Container = styled.View`
+  flex: 1;
+  margin-top: ${createScale(100)};
 `;
 
 export const Bar = styled.View`

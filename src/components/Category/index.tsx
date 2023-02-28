@@ -6,7 +6,7 @@ import { FlatlistHorizontal, Title } from "./styles";
 import { CardPrimary } from "@src/components/CardPrimary/index";
 
 const data = ["ranked", "duel", "fun", "training"];
-type ItemProps = "duel" | "ranked" | "training" | "fun";
+export type CategoryProps = "duel" | "ranked" | "training" | "fun";
 
 interface PropsCategory {
   categorySelected: string;
@@ -31,7 +31,7 @@ export function Category({
           <CardPrimary
             markerShow={markerShow}
             markerActive={item === categorySelected}
-            type={item as ItemProps}
+            type={item as CategoryProps}
             onPress={() => setCategory(item)}
           />
         )}

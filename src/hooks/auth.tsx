@@ -11,7 +11,12 @@ const { RESPONSE_TYPE } = process.env;
 const { SCOPE } = process.env;
 
 import { api } from "@src/services/api";
-import { getUserAuth, setUserAuth } from "@src/services/storage";
+import {
+  getUserAuth,
+  logoutAsyncStorage,
+  setUserAuth,
+} from "@src/services/storage";
+import { Alert } from "react-native";
 
 export type UserProps = {
   id: string;
@@ -26,6 +31,7 @@ type AuthContextData = {
   user: UserProps;
   signIn: () => Promise<void>;
   loading: boolean;
+  logout: () => Promise<void>;
 };
 
 type AuthProviderProps = {
@@ -98,12 +104,22 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function logout() {
+    try {
+      await logoutAsyncStorage();
+      setUser({} as UserProps);
+    } catch (error) {
+      Alert.alert("Não foi possível remorver item do asyncStorage.");
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
         signIn,
         loading,
+        logout,
       }}
     >
       <ThemeProvider theme={theme}>{children}</ThemeProvider>

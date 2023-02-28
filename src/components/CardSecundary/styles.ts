@@ -42,7 +42,7 @@ export const Footer = styled.View`
 export const FooterIcon = styled(LocalSvg)``;
 
 export const FooterTitle = styled.Text`
-  margin-left: ${createScale(12)};
+  margin-left: ${createScale(4)};
   margin-right: auto;
   font-family: ${(props) => props.theme.fonts.text500};
   font-size: ${createScale(13)};
@@ -52,6 +52,6 @@ export const FooterTitle = styled.Text`
 export const FooterSpan = styled.Text`
   margin-left: ${createScale(5)};
   font-family: ${(props) => props.theme.fonts.text500};
-  font-size: ${createScale(13)};
+  font-size: ${createScale(10)};
   color: ${(props) => props.theme.colors.heading};
 `;

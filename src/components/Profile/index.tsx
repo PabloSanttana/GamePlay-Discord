@@ -14,8 +14,13 @@ import {
 import UserImage from "@src/assets/user.png";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "@src/hooks/auth";
+import { TouchableOpacity } from "react-native";
 
-export function Profile() {
+type ProfileProps = {
+  setIsLogout: () => void;
+};
+
+export function Profile({ setIsLogout }: ProfileProps) {
   const { user } = useAuth();
   const navigation = useNavigation();
 
@@ -25,7 +30,9 @@ export function Profile() {
   }
   return (
     <Container>
-      <Image source={{ uri: user.avatar }} resizeMode="stretch" />
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setIsLogout()}>
+        <Image source={{ uri: user.avatar }} resizeMode="stretch" />
+      </TouchableOpacity>
 
       <ConatinerText>
         <ContainerTitle>

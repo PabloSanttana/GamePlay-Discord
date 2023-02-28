@@ -1,13 +1,13 @@
-import React from "react";
-import { FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, FlatList, Share, Platform, Linking } from "react-native";
 
 import { Background } from "@src/components/Background";
 import { Header } from "@src/components/Header";
 import Banner from "@src/assets/banner.png";
 import { HeaderList } from "@src/components/HeaderList";
-import { Menber } from "@src/components/Member/index";
+import { Menber, MenberProps } from "@src/components/Member";
 import { Button } from "@src/components/Button";
-import { ListDivider } from "../../components/ListDivider/index";
+import { ListDivider } from "../../components/ListDivider";
 import {
   Container,
   Title,
@@ -15,43 +15,101 @@ import {
   BackgroundImage,
   ContainerButton,
 } from "./styles";
+import { useRoute } from "@react-navigation/native";
+import { AppointmentProps } from "@src/services/storage";
+import { api } from "@src/services/api";
+import { Load } from "@src/components/Load";
+import { ListEmpty, ListEmptyTitle } from "../Home/styles";
+
+type Params = {
+  data: AppointmentProps;
+};
+
+type GuildWidget = {
+  id: string;
+  name: string;
+  instant_invite: string;
+  members: MenberProps[];
+  presence_count: number;
+};
 
 export function Details() {
-  const menbers = [
-    {
-      id: "1",
-      userName: "Pablo",
-      status: "Disponível",
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-    {
-      id: "2",
-      userName: "Pablo",
-      status: "Ocupado",
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-    {
-      id: "3",
-      userName: "Pablo",
-      status: "Indisponível",
-      avatar_url: "https://avatars.githubusercontent.com/u/52142127?v=4",
-    },
-  ];
+  const route = useRoute();
+  const { data } = route.params as Params;
+  const [widget, setWidget] = useState({} as GuildWidget);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getUsersGuild();
+  }, [data]);
+
+  async function getUsersGuild() {
+    try {
+      const response = await api.get(`/guilds/${data.guild.id}/widget.json`);
+      setWidget(response.data);
+    } catch (error) {
+      isValidGuild();
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleShareInvitation() {
+    if (isValidGuild()) {
+      return;
+    }
+
+    const message =
+      Platform.OS === "ios"
+        ? `junte-se a ${data.guild.game}.`
+        : widget.instant_invite;
+
+    Share.share({
+      message: message,
+      url: widget.instant_invite,
+    });
+  }
+
+  function isValidGuild() {
+    if (!widget.instant_invite) {
+      Alert.alert(
+        "Error ao tentar pegar informações do servidor, verifique se o servidor está com a opção widget json habilidata?"
+      );
+      return true;
+    }
+  }
+
+  function handleOpenGuild() {
+    if (isValidGuild()) {
+      return;
+    }
+
+    Linking.openURL(widget.instant_invite);
+  }
+
+  if (loading) {
+    return (
+      <Background>
+        <Load />
+      </Background>
+    );
+  }
 
   return (
     <Background>
       <Container>
-        <Header title="Details" share />
+        <Header title="Details" share shareInvitation={handleShareInvitation} />
         <BackgroundImage source={Banner} resizeMode="stretch">
-          <Title>League of Legends</Title>
-          <SubTitle>
-            É hoje que vamos chegar ao challenger sem perder uma partida da md10
-          </SubTitle>
+          <Title>{data.guild.name}</Title>
+          <SubTitle>{data.description}</SubTitle>
         </BackgroundImage>
-        <HeaderList title="Jogadores" subtitle={`Total ${menbers.length}`} />
+        <HeaderList
+          title="Jogadores"
+          subtitle={`Total ${widget.members ? widget.members.length : 0}`}
+        />
         <FlatList
-          keyExtractor={(item) => item.id}
-          data={menbers}
+          keyExtractor={(item) => item.avatar_url}
+          data={widget.members}
           renderItem={({ item }) => (
             <Menber
               avatar_url={item.avatar_url}
@@ -62,9 +120,14 @@ export function Details() {
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <ListDivider />}
           contentContainerStyle={{ paddingBottom: 69 }}
+          ListEmptyComponent={() => (
+            <ListEmpty>
+              <ListEmptyTitle>Sem menbros</ListEmptyTitle>
+            </ListEmpty>
+          )}
         />
         <ContainerButton>
-          <Button icon title="Entrar no servidor" onPress={() => {}} />
+          <Button icon title="Entrar no servidor" onPress={handleOpenGuild} />
         </ContainerButton>
       </Container>
     </Background>

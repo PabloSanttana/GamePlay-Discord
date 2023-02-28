@@ -10,9 +10,10 @@ import { useNavigation } from "@react-navigation/native";
 interface PropsHeader {
   title: string;
   share?: boolean;
+  shareInvitation?: () => void;
 }
 
-export function Header({ title, share = false }: PropsHeader) {
+export function Header({ title, share = false, shareInvitation }: PropsHeader) {
   const navigation = useNavigation();
 
   function handleGoback() {
@@ -31,7 +32,7 @@ export function Header({ title, share = false }: PropsHeader) {
       <Title>{title}</Title>
       <ContainerShare>
         {share && (
-          <ButtonOpacity activeOpacity={0.8}>
+          <ButtonOpacity onPress={shareInvitation} activeOpacity={0.8}>
             <Fontisto
               name="share"
               size={scale(24)}

@@ -17,24 +17,40 @@ import {
 } from "./styles";
 import { scale } from "react-native-size-matters";
 import { GuildIcon } from "@src/components/GuildIcon";
+import { AppointmentProps } from "@src/services/storage";
+import { CategoryProps } from "../Category";
 
-interface PropsCardSecundary extends TouchableOpacityProps {}
+const labelsCategory = {
+  duel: "Duelo 1x1",
+  ranked: "Ranqueada",
+  training: "Treino",
+  fun: "Diversão",
+};
 
-export function CardSecundary({ ...rest }: PropsCardSecundary) {
+interface PropsCardSecundary extends TouchableOpacityProps {
+  data: AppointmentProps;
+}
+
+export function CardSecundary({ data, ...rest }: PropsCardSecundary) {
   return (
     <Container activeOpacity={0.8} {...rest}>
-      <GuildIcon iconId="" guildId="" />
+      <GuildIcon iconId={data.guild.icon} guildId={data.guild.id} />
       <Content>
         <ContentLine>
-          <Title>Lendários</Title>
-          <SubtTitle>Ranqueada</SubtTitle>
+          <Title>{data.guild.name}</Title>
+
+          <SubtTitle>
+            {labelsCategory[data.category as CategoryProps]}
+          </SubtTitle>
         </ContentLine>
-        <SubtTitle>League of Legends</SubtTitle>
+        <SubtTitle>{}</SubtTitle>
         <Footer>
-          <FooterIcon asset={Calendar} width={scale(16)} height={scale(16)} />
-          <FooterTitle>Sex 18/06 às 21:00h</FooterTitle>
-          <FontAwesome5 name="user-alt" size={scale(16)} color="red" />
-          <FooterSpan>3</FooterSpan>
+          <FooterIcon asset={Calendar} width={scale(15)} height={scale(16)} />
+          <FooterTitle>{data.date}</FooterTitle>
+          <FontAwesome5 name="user-alt" size={scale(10)} color="red" />
+          <FooterSpan>
+            {data.guild.owner ? "Anfitrião" : "Visitante"}
+          </FooterSpan>
         </Footer>
       </Content>
     </Container>

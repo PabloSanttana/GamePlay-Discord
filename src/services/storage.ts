@@ -1,8 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GuildProps } from "@src/components/Guild";
 
 import { UserProps } from "../hooks/auth";
 
 const app = "@gameplay";
+
+export type AppointmentProps = {
+  id: string;
+  guild: GuildProps;
+  category: string;
+  date: string;
+  description: string;
+};
 
 export async function getUserAuth(): Promise<UserProps | null> {
   try {
@@ -22,20 +31,32 @@ export async function setUserAuth(user: UserProps) {
   }
 }
 
-export async function setAppointment() {
+export async function setAppointment(Appointment: AppointmentProps) {
   try {
-    const jsonUser = JSON.stringify({});
-    await AsyncStorage.setItem(app + "_Appointments", jsonUser);
+    const storage = await getAppointment();
+    //@ts-ignore
+    const appointments = [...storage, Appointment];
+    const jsonAppointments = JSON.stringify(appointments);
+    await AsyncStorage.setItem(app + "_Appointments", jsonAppointments);
   } catch (error) {
     throw new Error("Não foi possível salvar.");
   }
 }
 
-export async function getAppointment() {
+export async function getAppointment(): Promise<AppointmentProps | []> {
   try {
-    const jsonUser = await AsyncStorage.getItem(app + "_Appointments");
-    return jsonUser != null ? JSON.parse(jsonUser) : null;
+    const appointments = await AsyncStorage.getItem(app + "_Appointments");
+    return appointments ? JSON.parse(appointments) : [];
   } catch (error) {
-    return null;
+    return [];
+  }
+}
+
+export async function logoutAsyncStorage() {
+  try {
+    await AsyncStorage.removeItem(app + "_Appointments");
+    await AsyncStorage.removeItem(app + "_user");
+  } catch (error) {
+    throw new Error();
   }
 }
